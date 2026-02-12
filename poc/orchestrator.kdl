@@ -25,7 +25,7 @@ layout {
 
     // --- Worker tabs are created dynamically by spawn-worker.sh -------------
     // The orchestrator calls:
-    //   spawn-worker.sh --cwd ./api --name "auth-worker" \
+    //   poc/spawn-worker.sh --cwd ./api --name "auth-worker" \
     //     "You have access to yx. Run 'yx ls' to see tasks. ..."
     //
     // Each worker gets its own tab with a single Claude pane.

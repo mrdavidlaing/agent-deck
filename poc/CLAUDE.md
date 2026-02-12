@@ -6,9 +6,9 @@ into tasks, and spawn Claude workers to execute them in parallel.
 ## Architecture
 
 ```
-layouts/orchestrator.kdl    Zellij layout (you + yx watcher)
-scripts/spawn-worker.sh     Launches a worker in a new Zellij tab
-.yaks/                      Shared task state (created by yx)
+poc/orchestrator.kdl    Zellij layout (you + yx watcher)
+poc/spawn-worker.sh     Launches a worker in a new Zellij tab
+.yaks/                  Shared task state (created by yx)
 ```
 
 Workers run in sub-repo directories. They have NO knowledge of this
@@ -55,7 +55,7 @@ This opens the context file. Write:
 Use `spawn-worker.sh` to launch a Claude instance in a new Zellij tab:
 
 ```bash
-./scripts/spawn-worker.sh \
+./poc/spawn-worker.sh \
   --cwd ./api \
   --name "api-auth" \
   "Work on the auth/api/* tasks. For each task, read its context with
@@ -79,15 +79,15 @@ Example for a monorepo:
 
 ```bash
 # Worker for API changes
-./scripts/spawn-worker.sh --cwd ./api --name "api-worker" \
+./poc/spawn-worker.sh --cwd ./api --name "api-worker" \
   "Work on tasks under auth/api/*"
 
 # Worker for frontend changes
-./scripts/spawn-worker.sh --cwd ./frontend --name "frontend-worker" \
+./poc/spawn-worker.sh --cwd ./frontend --name "frontend-worker" \
   "Work on tasks under auth/frontend/*"
 
 # Worker for integration tests (needs access to both)
-./scripts/spawn-worker.sh --cwd . --name "integration-tests" \
+./poc/spawn-worker.sh --cwd . --name "integration-tests" \
   "Work on tasks under auth/integration/*. Run the full test suite."
 ```
 
