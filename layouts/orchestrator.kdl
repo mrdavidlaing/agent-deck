@@ -1,0 +1,32 @@
+// Orchestrator layout for agent-deck with Zellij + Yaks
+//
+// Tab 1 (Orchestrator):
+//   Left 1/3:  live `yx ls` watcher showing task state
+//   Right 2/3: orchestrator Claude instance that plans and spawns workers
+//
+// Workers are spawned as new tabs by the orchestrator via spawn-worker.sh
+
+layout {
+    // --- Orchestrator tab ---------------------------------------------------
+    tab name="orchestrator" focus=true {
+        pane split_direction="vertical" {
+            // Left 1/3: live yak status
+            pane size="33%" name="yak-watch" {
+                command "watch"
+                args "-n2" "-c" "yx ls"
+            }
+
+            // Right 2/3: orchestrator Claude instance
+            pane size="67%" name="orchestrator" focus=true {
+                command "claude"
+            }
+        }
+    }
+
+    // --- Worker tabs are created dynamically by spawn-worker.sh -------------
+    // The orchestrator calls:
+    //   spawn-worker.sh --cwd ./api --name "auth-worker" \
+    //     "You have access to yx. Run 'yx ls' to see tasks. ..."
+    //
+    // Each worker gets its own tab with a single Claude pane.
+}
